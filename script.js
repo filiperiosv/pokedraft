@@ -732,6 +732,8 @@ function renderListaDrag() {
       li.addEventListener('drop',      onDrop);
       li.addEventListener('dragend',   onDragEnd);
       li.addEventListener('touchstart', onTouchStart, { passive: false });
+      li.addEventListener('touchmove',  onTouchMove,  { passive: false });
+      li.addEventListener('touchend',   onTouchEnd);
     }
 
     lista.appendChild(li);
@@ -786,23 +788,69 @@ function onDragEnd(e) {
   limparIndicadores();
 }
 
-// Touch: tap para selecionar (destaca), tap no destino para inserir
-let touchSrcIdx = null;
+// Touch drag real: segura e arrasta o item
+let touchDrag = null;
+
 function onTouchStart(e) {
   e.preventDefault();
-  const idx = parseInt(e.currentTarget.dataset.idx);
-  if (touchSrcIdx === null) {
-    touchSrcIdx = idx;
-    limparIndicadores();
-    e.currentTarget.classList.add('drag-sobre');
-  } else if (touchSrcIdx === idx) {
-    // Toca no mesmo → cancela seleção
-    touchSrcIdx = null;
-    limparIndicadores();
-  } else {
-    inserirNaPosicao(touchSrcIdx, idx);
-    touchSrcIdx = null;
+  const li = e.currentTarget;
+  const rect = li.getBoundingClientRect();
+  const touch = e.touches[0];
+
+  const ghost = li.cloneNode(true);
+  ghost.style.cssText = `
+    position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;
+    opacity:0.8;pointer-events:none;z-index:1000;
+    box-shadow:0 6px 20px rgba(0,0,0,0.4);transform:scale(1.03);
+  `;
+  document.body.appendChild(ghost);
+  li.classList.add('arrastando');
+
+  touchDrag = {
+    srcIdx: parseInt(li.dataset.idx),
+    ghost,
+    offsetY: touch.clientY - rect.top,
+    items: [...document.querySelectorAll('.drag-item')]
+  };
+}
+
+function onTouchMove(e) {
+  if (!touchDrag) return;
+  e.preventDefault();
+  const touch = e.touches[0];
+  touchDrag.ghost.style.top = (touch.clientY - touchDrag.offsetY) + 'px';
+
+  limparIndicadores();
+  for (const item of touchDrag.items) {
+    const r = item.getBoundingClientRect();
+    const dstIdx = parseInt(item.dataset.idx);
+    if (dstIdx === touchDrag.srcIdx) continue;
+    if (touch.clientY >= r.top && touch.clientY <= r.bottom) {
+      item.classList.add(touchDrag.srcIdx < dstIdx ? 'insert-depois' : 'insert-antes');
+    }
   }
+}
+
+function onTouchEnd(e) {
+  if (!touchDrag) return;
+  const touch = e.changedTouches[0];
+
+  let dstIdx = null;
+  for (const item of touchDrag.items) {
+    const r = item.getBoundingClientRect();
+    if (touch.clientY >= r.top && touch.clientY <= r.bottom) {
+      dstIdx = parseInt(item.dataset.idx);
+      break;
+    }
+  }
+
+  touchDrag.ghost.remove();
+  document.querySelectorAll('.drag-item').forEach(el => el.classList.remove('arrastando'));
+  limparIndicadores();
+  const { srcIdx } = touchDrag;
+  touchDrag = null;
+
+  if (dstIdx !== null && dstIdx !== srcIdx) inserirNaPosicao(srcIdx, dstIdx);
 }
 
 // --- Re-Draft ---
