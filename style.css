@@ -187,6 +187,84 @@ body {
   background: var(--vermelho-esc);
 }
 
+/* ===== Botão Regras ===== */
+.btn-regras {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  background: transparent;
+  color: var(--preto);
+  border: 2px solid var(--preto);
+  box-shadow: 2px 2px 0 var(--preto);
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  margin-top: 6px;
+  transition: transform 0.07s, box-shadow 0.07s;
+}
+.btn-regras:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* ===== Modal Regras ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 16px;
+}
+
+.modal-caixa {
+  background: var(--bege);
+  border: 3px solid var(--preto);
+  box-shadow: 5px 5px 0 var(--preto);
+  border-radius: 4px;
+  padding: 20px 18px 16px;
+  width: 100%;
+  max-width: 360px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.modal-titulo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  text-align: center;
+  color: var(--preto);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.modal-corpo {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+
+.modal-corpo p {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: var(--preto);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.modal-secao {
+  font-size: 8px !important;
+  margin-top: 8px !important;
+  color: var(--vermelho) !important;
+}
+
 /* ===== Loading ===== */
 .texto-loading {
   font-family: 'Press Start 2P', monospace;
@@ -802,6 +880,7 @@ body {
   justify-content: center;
   width: 100%;
   max-width: 400px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
 }
 
 .hint-redraft {

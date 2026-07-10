@@ -1244,6 +1244,17 @@ document.getElementById('btnIniciar').addEventListener('click', () => {
   iniciarRodadaDraft();
 });
 
+document.getElementById('btnRegras').addEventListener('click', () => {
+  document.getElementById('modalRegras').classList.remove('oculto');
+});
+document.getElementById('btnFecharRegras').addEventListener('click', () => {
+  document.getElementById('modalRegras').classList.add('oculto');
+});
+document.getElementById('modalRegras').addEventListener('click', e => {
+  if (e.target === e.currentTarget)
+    document.getElementById('modalRegras').classList.add('oculto');
+});
+
 document.getElementById('btnAvancarBatalha').addEventListener('click', () => {
   restaurarTime();
   mostrarPreJogo();

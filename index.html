@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>PokéDraft</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="icon.svg" />
@@ -34,8 +34,31 @@
         <p class="titulo-jogo">PokéDraft</p>
         <p class="subtitulo">Monte seu time. Vença os Ginásios.</p>
         <button class="btn-primario" id="btnIniciar">▶ COMEÇAR</button>
+        <button class="btn-regras" id="btnRegras">? COMO JOGAR</button>
       </div>
     </section>
+
+    <!-- Modal de Regras -->
+    <div class="modal-overlay oculto" id="modalRegras">
+      <div class="modal-caixa">
+        <p class="modal-titulo">COMO JOGAR</p>
+        <div class="modal-corpo">
+          <p class="modal-secao">⚾ DRAFT</p>
+          <p>Aparecem 3 Pokémon aleatórios. Escolha 1 por rodada até montar um time de 6.</p>
+          <p class="modal-secao">⚔ BATALHA</p>
+          <p>12 batalhas automáticas: 8 Ginásios + Elite Four. Reordene seu time antes de cada luta.</p>
+          <p class="modal-secao">💥 COMO VENCE</p>
+          <p>Força = Atq + Def + HP, modificada por vantagem de tipo e sorte. O mais forte derruba o adversário.</p>
+          <p class="modal-secao">😴 FADIGA</p>
+          <p>O vencedor perde força igual à do oponente derrotado. Pokémon enfraquecido desmaía mais tarde.</p>
+          <p class="modal-secao">✨ SHINY</p>
+          <p>2% de chance por Pokémon. Shiny tem +10% em todos os atributos.</p>
+          <p class="modal-secao">🃏 RE-DRAFT</p>
+          <p>Use 1x por campanha: sacrifica um Pokémon e sorteia 3 novos para escolher.</p>
+        </div>
+        <button class="btn-primario" id="btnFecharRegras">✕ FECHAR</button>
+      </div>
+    </div>
 
     <!-- Tela de loading -->
     <section class="tela oculto" id="telaLoading">
