@@ -33,7 +33,8 @@ body {
   flex-direction: column;
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   background: #2c2c2c;
 }
 
@@ -106,21 +107,25 @@ body {
 /* ===== Arena (conteúdo principal) ===== */
 .arena {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   background: var(--bege);
   border-left: 3px solid var(--preto);
   border-right: 3px solid var(--preto);
   border-bottom: 3px solid var(--preto);
+  overflow: hidden;
 }
 
 .tela {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
+  overflow-y: auto;
 }
 
 .oculto {
@@ -899,6 +904,7 @@ body {
   padding: 0 !important;
   align-items: stretch !important;
   justify-content: flex-start !important;
+  overflow: hidden !important;
   gap: 0;
   background: var(--preto);
 }
@@ -1027,7 +1033,7 @@ body {
 .dialogo-batalha {
   width: 100%;
   flex: 1;
-  min-height: 180px;
+  min-height: 0;
   background: var(--bege);
   border-top: 4px solid var(--preto);
   outline: 3px solid var(--bege-esc);
