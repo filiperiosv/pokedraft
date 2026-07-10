@@ -1273,11 +1273,8 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
 
 function gerarTexto(vitoria, chegouAte, mvpNome) {
   const icone = vitoria ? '🏆' : '⚫';
-  const totalBadges = estado.insignias.length;
-  const badgeBar = '🔵'.repeat(totalBadges) + '⚪'.repeat(8 - totalBadges);
   const squad = estado.squad.map(p => nomePT(p.nome) + (p.isShiny ? ' ★' : '')).join(', ');
   return `PokéDraft ${icone}
-Insígnias: ${badgeBar} (${totalBadges}/8)
 Cheguei até: ${chegouAte}
 MVP: ${mvpNome}
 Time: ${squad}
