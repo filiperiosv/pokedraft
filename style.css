@@ -1239,3 +1239,52 @@ body {
   margin-bottom: 6px;
   letter-spacing: 0.05em;
 }
+
+/* ===== Banner PWA ===== */
+#pwa-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bege-esc);
+  border-top: 3px solid var(--preto);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 999;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: var(--preto);
+  box-shadow: 0 -3px 0 var(--preto);
+}
+
+#pwa-banner span {
+  flex: 1;
+  line-height: 1.7;
+}
+
+#pwa-btn-instalar {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  background: var(--vermelho);
+  color: var(--branco);
+  border: 2px solid var(--preto);
+  box-shadow: 2px 2px 0 var(--preto);
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+#pwa-btn-fechar {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  background: none;
+  border: none;
+  color: var(--preto);
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.5;
+  line-height: 1;
+}

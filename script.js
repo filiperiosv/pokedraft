@@ -1248,3 +1248,37 @@ document.getElementById('btnAvancarBatalha').addEventListener('click', () => {
   restaurarTime();
   mostrarPreJogo();
 });
+
+// ===== PWA =====
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+
+let promptInstalacao = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  promptInstalacao = e;
+
+  if (localStorage.getItem('pwa-dispensado')) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'pwa-banner';
+  banner.innerHTML = `
+    <span>⬇️ Instale o PokéDraft na sua tela inicial!</span>
+    <button id="pwa-btn-instalar">Instalar</button>
+    <button id="pwa-btn-fechar" aria-label="Fechar">✕</button>
+  `;
+  document.body.appendChild(banner);
+
+  document.getElementById('pwa-btn-instalar').addEventListener('click', () => {
+    promptInstalacao.prompt();
+    promptInstalacao.userChoice.then(() => banner.remove());
+  });
+
+  document.getElementById('pwa-btn-fechar').addEventListener('click', () => {
+    localStorage.setItem('pwa-dispensado', '1');
+    banner.remove();
+  });
+});

@@ -1,0 +1,18 @@
+{
+  "name": "PokéDraft",
+  "short_name": "PokéDraft",
+  "description": "Auto-battler de Pokémon — draft seu time e vença a Liga!",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#c8342a",
+  "theme_color": "#c8342a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
