@@ -1,0 +1,1241 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --vermelho:    #c0392b;
+  --vermelho-esc:#922b21;
+  --verde-hp:    #27ae60;
+  --bege:        #f5e6c8;
+  --bege-esc:    #e8d5a3;
+  --cinza:       #7f8c8d;
+  --cinza-esc:   #555f60;
+  --preto:       #1a1a1a;
+  --branco:      #fafafa;
+  --dourado:     #f1c40f;
+  --shiny:       #e67e22;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700&display=swap');
+
+html, body {
+  height: 100%;
+  background: var(--preto);
+  color: var(--preto);
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #2c2c2c;
+}
+
+/* ===== Barra do Squad ===== */
+.squad-bar {
+  background: var(--vermelho-esc);
+  border-bottom: 3px solid var(--preto);
+  padding: 6px 8px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.squad-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--bege);
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.squad-slots {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.slot {
+  width: 52px;
+  height: 52px;
+  background: var(--vermelho);
+  border: 2px solid var(--preto);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.slot.vazio {
+  background: var(--vermelho);
+  opacity: 0.55;
+}
+
+.slot-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+}
+
+.slot img {
+  width: 48px;
+  height: 48px;
+  image-rendering: pixelated;
+}
+
+.slot.shiny::after {
+  content: '★';
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  font-size: 9px;
+  color: var(--dourado);
+  text-shadow: 0 0 4px var(--shiny);
+}
+
+/* ===== Arena (conteúdo principal) ===== */
+.arena {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bege);
+  border-left: 3px solid var(--preto);
+  border-right: 3px solid var(--preto);
+  border-bottom: 3px solid var(--preto);
+}
+
+.tela {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.oculto {
+  display: none !important;
+}
+
+/* ===== Caixa de Diálogo (estilo Pokémon) ===== */
+.caixa-dialogo {
+  background: var(--bege);
+  border: 3px solid var(--preto);
+  box-shadow: 4px 4px 0 var(--preto);
+  border-radius: 4px;
+  padding: 24px 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 340px;
+}
+
+.titulo-jogo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 22px;
+  color: var(--vermelho-esc);
+  text-shadow: 2px 2px 0 var(--preto);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.titulo-fase {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  color: var(--vermelho-esc);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.subtitulo {
+  font-size: 14px;
+  color: var(--cinza-esc);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ===== Botões ===== */
+.btn-primario {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  background: var(--vermelho);
+  color: var(--branco);
+  border: 2px solid var(--preto);
+  box-shadow: 3px 3px 0 var(--preto);
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  transition: transform 0.07s, box-shadow 0.07s;
+}
+
+.btn-primario:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--preto);
+}
+
+.btn-primario:hover {
+  background: var(--vermelho-esc);
+}
+
+/* ===== Loading ===== */
+.texto-loading {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--cinza-esc);
+  margin-bottom: 16px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 4px solid var(--bege-esc);
+  border-top-color: var(--vermelho);
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== Instrução do Draft ===== */
+.instrucao {
+  font-size: 13px;
+  color: var(--cinza-esc);
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  line-height: 1.5;
+}
+
+.instrucao strong {
+  color: var(--vermelho-esc);
+}
+
+/* ===== Cartas do Draft ===== */
+.cartas-draft {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.carta {
+  background: var(--bege);
+  border: 3px solid var(--preto);
+  box-shadow: 4px 4px 0 var(--preto);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: transform 0.08s, box-shadow 0.08s, background 0.1s;
+  position: relative;
+}
+
+.carta:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--preto);
+  background: var(--bege-esc);
+}
+
+.carta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--preto);
+}
+
+.carta.shiny {
+  border-color: var(--dourado);
+  box-shadow: 4px 4px 0 var(--dourado);
+  overflow: hidden;
+  background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 50%, #fef9e7 100%);
+  animation: shiny-glow 2.5s ease-in-out infinite;
+}
+
+.carta.shiny:hover {
+  box-shadow: 6px 6px 0 var(--dourado);
+}
+
+/* Varredura de luz dourada */
+.carta.shiny::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.35), transparent);
+  animation: shiny-sweep 2.2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes shiny-sweep {
+  0%   { left: -80%; }
+  100% { left: 140%; }
+}
+
+@keyframes shiny-glow {
+  0%, 100% { box-shadow: 4px 4px 0 var(--dourado), 0 0 6px rgba(241,196,15,0.3); }
+  50%       { box-shadow: 4px 4px 0 var(--dourado), 0 0 18px rgba(241,196,15,0.7); }
+}
+
+/* Banner SHINY no topo do card */
+.shiny-banner {
+  width: 100%;
+  background: var(--dourado);
+  color: var(--preto);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  padding: 5px 8px;
+  letter-spacing: 2px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: shiny-banner-pulse 1.2s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+}
+
+.shiny-bonus {
+  font-size: 9px;
+  opacity: 0.85;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+@keyframes shiny-banner-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.75; }
+}
+
+/* Sprite com brilho dourado */
+.sprite-shiny {
+  filter: drop-shadow(0 0 5px rgba(241,196,15,0.8));
+  animation: sprite-shiny-glow 2s ease-in-out infinite;
+}
+
+@keyframes sprite-shiny-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(241,196,15,0.6)); }
+  50%       { filter: drop-shadow(0 0 10px rgba(241,196,15,1.0)); }
+}
+
+/* Para acomodar o banner o card precisa ser coluna */
+.carta.shiny {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+}
+
+.carta.shiny .carta-sprite,
+.carta.shiny .carta-info,
+.carta.shiny .carta-escolher {
+  /* Retorna ao layout horizontal dentro do banner */
+}
+
+/* Wrapper interno do card shiny */
+.carta.shiny .carta-corpo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+}
+
+.carta-sprite {
+  width: 72px;
+  height: 72px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.carta-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.carta-nome {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--preto);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carta-shiny-badge {
+  display: inline-block;
+  font-size: 9px;
+  color: var(--shiny);
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.carta-tipos {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 7px;
+}
+
+.tipo-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.3);
+  color: var(--branco);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.carta-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cinza-esc);
+  margin-top: 2px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--cinza);
+  letter-spacing: 0.5px;
+}
+
+.stat-val {
+  font-size: 12px;
+  color: var(--preto);
+  font-weight: 700;
+}
+
+.stat-val.hp   { color: var(--verde-hp); }
+.stat-val.atq  { color: var(--vermelho); }
+.stat-val.def  { color: #2980b9; }
+.stat-val.satq { color: #8e44ad; }
+.stat-val.sdef { color: #16a085; }
+.stat-val.vel  { color: #d4ac0d; }
+
+.carta-escolher {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: var(--vermelho-esc);
+  flex-shrink: 0;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ===== Cores dos tipos ===== */
+.tipo-fire     { background: #e74c3c; }
+.tipo-water    { background: #2980b9; }
+.tipo-grass    { background: #27ae60; }
+.tipo-electric { background: #f39c12; }
+.tipo-psychic  { background: #8e44ad; }
+.tipo-ice      { background: #76d7c4; color: #1a1a1a; }
+.tipo-dragon   { background: #1a5276; }
+.tipo-dark     { background: #34495e; }
+.tipo-fighting { background: #c0392b; }
+.tipo-poison   { background: #7d3c98; }
+.tipo-ground   { background: #d4ac0d; color: #1a1a1a; }
+.tipo-flying   { background: #5dade2; }
+.tipo-bug      { background: #1e8449; }
+.tipo-rock     { background: #7f8c8d; }
+.tipo-ghost    { background: #512e5f; }
+.tipo-steel    { background: #797d7f; }
+.tipo-normal   { background: #95a5a6; color: #1a1a1a; }
+.tipo-fairy    { background: #f1948a; }
+
+/* ===== Animação entrada carta ===== */
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.carta { animation: entrar 0.2s ease both; }
+.carta:nth-child(2) { animation-delay: 0.08s; }
+.carta:nth-child(3) { animation-delay: 0.16s; }
+
+/* ===== Slot animação ===== */
+@keyframes preencher {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.slot.preenchendo img {
+  animation: preencher 0.35s ease forwards;
+}
+
+/* ===== Responsividade extra pequena ===== */
+@media (max-width: 360px) {
+  .slot { width: 44px; height: 44px; }
+  .slot img { width: 40px; height: 40px; }
+  .carta-sprite { width: 60px; height: 60px; }
+}
+
+/* ===== Botão secundário ===== */
+.btn-secundario {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  background: var(--bege-esc);
+  color: var(--cinza-esc);
+  border: 2px solid var(--cinza);
+  box-shadow: 3px 3px 0 var(--cinza);
+  padding: 9px 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  transition: transform 0.07s, box-shadow 0.07s;
+}
+.btn-secundario:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--cinza);
+}
+
+/* ===== Oponente Card (Névoa de Guerra) ===== */
+.oponente-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--cinza-esc);
+  border: 3px solid var(--preto);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0 var(--preto);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.oponente-header {
+  background: var(--preto);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.oponente-titulo {
+  font-size: 12px;
+  color: var(--bege);
+  font-weight: 700;
+}
+
+.batalha-num {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--dourado);
+}
+
+.oponente-body {
+  background: var(--bege);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trainer-sprite {
+  width: 80px;
+  height: 80px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.oponente-nome-tipo {
+  flex: 1;
+  min-width: 0;
+}
+
+.oponente-nome {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--preto);
+  margin-bottom: 4px;
+}
+
+.oponente-especialidade {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cinza-esc);
+}
+
+.oponente-time {
+  background: var(--bege);
+  padding: 6px 12px 10px;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.slot-pk {
+  width: 44px;
+  height: 44px;
+  background: var(--cinza-esc);
+  border: 2px solid var(--preto);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.slot-pk.slot-ace {
+  background: var(--bege-esc);
+  border-color: var(--dourado);
+}
+
+.pk-slot-sprite {
+  width: 40px;
+  height: 40px;
+  image-rendering: pixelated;
+  display: block;
+  object-fit: contain;
+}
+
+.ace-star {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  font-size: 7px;
+  color: var(--dourado);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ===== Lista Drag-and-Drop ===== */
+.lista-drag {
+  list-style: none;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.drag-item {
+  background: var(--bege);
+  border: 2px solid var(--preto);
+  box-shadow: 3px 3px 0 var(--preto);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  cursor: grab;
+  user-select: none;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.drag-item:active { cursor: grabbing; }
+
+.drag-item.arrastando {
+  opacity: 0.4;
+}
+
+.drag-item.drag-sobre {
+  border-color: var(--vermelho);
+  box-shadow: 3px 3px 0 var(--vermelho);
+  transform: scale(1.02);
+}
+
+/* Indicadores visuais de posição de inserção */
+.drag-item.insert-antes {
+  border-top: 3px solid var(--vermelho);
+  margin-top: -1px;
+}
+.drag-item.insert-depois {
+  border-bottom: 3px solid var(--vermelho);
+  margin-bottom: -1px;
+}
+
+.drag-item.shiny {
+  border-color: var(--dourado);
+  box-shadow: 3px 3px 0 var(--dourado);
+  background: linear-gradient(135deg, #fef9e7, #fdebd0);
+  animation: shiny-glow 2.5s ease-in-out infinite;
+}
+
+.drag-shiny-tag {
+  color: var(--dourado);
+  font-size: 8px;
+  font-weight: 700;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.drag-pos {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--cinza);
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.drag-sprite {
+  width: 44px;
+  height: 44px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.drag-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.drag-nome {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  text-transform: uppercase;
+  color: var(--preto);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drag-stats {
+  font-size: 10px;
+  color: var(--cinza-esc);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.drag-handle {
+  font-size: 16px;
+  color: var(--cinza);
+  flex-shrink: 0;
+  cursor: grab;
+  padding: 0 4px;
+}
+
+/* ===== Barra de HP ===== */
+.hp-bar-wrap {
+  width: 100%;
+  height: 5px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.hp-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.hp-bar.alto  { background: var(--verde-hp); }
+.hp-bar.medio { background: #f39c12; }
+.hp-bar.baixo { background: #e74c3c; }
+
+/* ===== Modo Sacrifício (Re-Draft) ===== */
+.drag-item.modo-sacrificio {
+  cursor: default;
+}
+
+.drag-item.modo-sacrificio:hover {
+  transform: none;
+}
+
+.btn-sacrificio {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  background: var(--vermelho-esc);
+  color: var(--branco);
+  border: 2px solid var(--preto);
+  box-shadow: 2px 2px 0 var(--preto);
+  padding: 5px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: transform 0.07s, box-shadow 0.07s;
+}
+
+.btn-sacrificio:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--preto);
+}
+
+.btn-sacrificio:hover {
+  background: var(--vermelho);
+}
+
+/* ===== Ações Pré-Jogo ===== */
+.acoes-pre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.hint-redraft {
+  width: 100%;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.65rem;
+  color: #888;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* ===== Tela de Batalha ===== */
+.tela-batalha {
+  /* neutraliza padding/align do .tela genérico */
+  padding: 0 !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 0;
+  background: var(--preto);
+}
+
+/* Status das equipes — strip compacto */
+.batalha-status {
+  background: var(--preto);
+  border-bottom: 2px solid #333;
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.status-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.sprite-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 42px;
+}
+
+.sprite-batalha {
+  width: 38px;
+  height: 38px;
+  image-rendering: pixelated;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  background: rgba(0,0,0,0.3);
+  transition: filter 0.3s, opacity 0.3s;
+}
+
+.hp-bar-batalha-wrap {
+  width: 100%;
+  height: 4px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.hp-bar-batalha {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.hp-bar-batalha.alto  { background: #27ae60; }
+.hp-bar-batalha.medio { background: #f39c12; }
+.hp-bar-batalha.baixo { background: #e74c3c; }
+
+.sprite-batalha.ativo {
+  border-color: var(--dourado);
+  filter: drop-shadow(0 0 3px var(--dourado));
+}
+
+.sprite-batalha.desmaiado {
+  filter: grayscale(1) opacity(0.35);
+}
+
+@keyframes piscar {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.1; }
+}
+
+.sprite-batalha.desmaiando {
+  animation: piscar 0.35s ease 3;
+}
+
+/* ===== Arena principal ===== */
+.arena-batalha {
+  flex: 0 0 190px;
+  width: 100%;
+  background:
+    linear-gradient(to bottom,
+      #1a1a2e 0%,
+      #16213e 50%,
+      #2d4a2d 50%,
+      #1a2e1a 100%
+    );
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  border-bottom: 3px solid var(--preto);
+}
+
+.arena-adv {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 20px 24px 0 0;
+}
+
+.arena-jog {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 0 0 20px 24px;
+}
+
+.sprite-arena {
+  width: 108px;
+  height: 108px;
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.8));
+  transition: filter 0.3s, opacity 0.3s;
+}
+
+.sprite-arena.arena-desmaiando {
+  animation: piscar 0.35s ease 3;
+}
+
+.sprite-arena.arena-desmaiado {
+  filter: grayscale(1) opacity(0.3);
+}
+
+/* ===== Caixa de diálogo estilo Pokémon ===== */
+.dialogo-batalha {
+  width: 100%;
+  flex: 1;
+  min-height: 180px;
+  background: var(--bege);
+  border-top: 4px solid var(--preto);
+  outline: 3px solid var(--bege-esc);
+  outline-offset: -7px;
+  padding: 12px 18px 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  scroll-behavior: smooth;
+}
+
+.log-entry {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--preto);
+  line-height: 1.9;
+  padding: 1px 0;
+  animation: fadeIn 0.15s ease both;
+}
+
+/* Confronto: separador entre duelos */
+.log-entry.confronto {
+  color: var(--cinza-esc);
+  font-size: 8px;
+  padding: 6px 0 2px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(0,0,0,0.15);
+}
+
+/* Vantagem de tipo: badge */
+.log-entry.vantagem {
+  color: #fff;
+  background: #b45309;
+  padding: 2px 7px;
+  border-radius: 2px;
+  align-self: flex-start;
+  letter-spacing: 0.04em;
+  margin: 1px 0;
+  font-size: 7px;
+}
+
+.log-entry.vantagem.dupla {
+  background: #9b1c1c;
+}
+
+/* Resultado do duelo */
+.log-entry.vitoria {
+  color: #166534;
+  font-size: 10px;
+  padding: 2px 0;
+}
+
+.log-entry.derrota {
+  color: #991b1b;
+  font-size: 10px;
+  padding: 2px 0;
+}
+
+.log-entry.shiny {
+  color: #92400e;
+  font-size: 10px;
+  padding: 2px 0;
+}
+
+/* Resultado final */
+.log-entry.fim {
+  font-size: 9px;
+  text-align: center;
+  padding: 10px 4px 4px;
+  margin-top: 6px;
+  border-top: 2px solid rgba(0,0,0,0.2);
+  line-height: 2;
+}
+
+.log-entry.fim.vitoria { color: #92400e; }
+.log-entry.fim.derrota { color: #991b1b; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.btn-proximo {
+  flex-shrink: 0;
+  margin-top: 0;
+  border-radius: 0;
+  border-top: 3px solid var(--vermelho-esc);
+}
+
+.btn-proximo:not(.oculto) {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  z-index: 50;
+}
+
+/* ===== Fim de Campanha ===== */
+.resultado-icone {
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: center;
+}
+
+.insignias-fim-container {
+  margin: 8px 0 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.insignias-fim-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: var(--preto);
+  opacity: 0.7;
+}
+
+.insignias-fim-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.insignia-fim {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  background: rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.insignia-fim.conquistada {
+  border-color: var(--dourado);
+  background: rgba(0,0,0,0.55);
+  box-shadow: 0 0 7px var(--dourado);
+}
+
+.insignia-fim.vazia {
+  opacity: 0.3;
+}
+
+.insignia-fim img {
+  width: 18px;
+  height: 18px;
+  display: block;
+  object-fit: contain;
+}
+
+.texto-compartilhar {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  background: var(--bege-esc);
+  border: 2px solid var(--preto);
+  border-radius: 3px;
+  padding: 10px;
+  margin: 12px 0;
+  line-height: 1.8;
+  color: var(--preto);
+  text-align: left;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.btn-copiar {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  background: var(--verde-hp);
+  color: var(--branco);
+  border: 2px solid var(--preto);
+  box-shadow: 3px 3px 0 var(--preto);
+  padding: 9px 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 4px;
+}
+.btn-copiar:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--preto);
+}
+
+.btn-reiniciar {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  background: var(--cinza-esc);
+  color: var(--branco);
+  border: 2px solid var(--preto);
+  box-shadow: 3px 3px 0 var(--preto);
+  padding: 9px 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 8px;
+}
+
+.btns-fim {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ===== Separador de divisão entre ginásios e elite ===== */
+.tag-elite {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  background: var(--dourado);
+  color: var(--preto);
+  padding: 2px 6px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+/* ===== Barra de Insígnias ===== */
+.insignias-bar {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 7px;
+}
+
+.insignia-slot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #444;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.insignia-slot.conquistada {
+  border-color: var(--dourado);
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 6px var(--dourado);
+}
+
+.insignia-slot svg,
+.insignia-slot img {
+  width: 16px;
+  height: 16px;
+  display: block;
+  object-fit: contain;
+}
+
+/* ===== Re-Draft: opção manter atual ===== */
+.opcao-manter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.manter-label {
+  font-size: 11px;
+  color: var(--cinza);
+}
+
+.carta-manter {
+  opacity: 0.75;
+  border-color: var(--cinza-esc) !important;
+  box-shadow: none !important;
+}
+
+.carta-manter::before {
+  content: '↩ MANTER ATUAL';
+  display: block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: var(--cinza);
+  text-align: center;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PokéDraft</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Barra superior: slots do time + insígnias -->
+  <header class="squad-bar">
+    <div class="squad-title">MEU TIME</div>
+    <div class="squad-slots" id="squadSlots">
+      <div class="slot vazio" id="slot-0"><span class="slot-num">1</span></div>
+      <div class="slot vazio" id="slot-1"><span class="slot-num">2</span></div>
+      <div class="slot vazio" id="slot-2"><span class="slot-num">3</span></div>
+      <div class="slot vazio" id="slot-3"><span class="slot-num">4</span></div>
+      <div class="slot vazio" id="slot-4"><span class="slot-num">5</span></div>
+      <div class="slot vazio" id="slot-5"><span class="slot-num">6</span></div>
+    </div>
+    <div class="insignias-bar" id="insigniasBar"></div>
+  </header>
+
+  <!-- Área principal -->
+  <main class="arena" id="arena">
+
+    <!-- Tela de boas-vindas -->
+    <section class="tela" id="telaInicio">
+      <div class="caixa-dialogo">
+        <p class="titulo-jogo">PokéDraft</p>
+        <p class="subtitulo">Monte seu time. Vença os Ginásios.</p>
+        <button class="btn-primario" id="btnIniciar">▶ COMEÇAR</button>
+      </div>
+    </section>
+
+    <!-- Tela de loading -->
+    <section class="tela oculto" id="telaLoading">
+      <div class="caixa-dialogo">
+        <p class="texto-loading" id="textoLoading">Sorteando Pokémon...</p>
+        <div class="spinner"></div>
+      </div>
+    </section>
+
+    <!-- Tela do Draft -->
+    <section class="tela oculto" id="telaDraft">
+      <p class="instrucao">Escolha <strong>1</strong> Pokémon para o seu time!</p>
+      <div class="cartas-draft" id="cartasDraft">
+        <!-- Cartas geradas via JS -->
+      </div>
+    </section>
+
+    <!-- Tela de draft completo -->
+    <section class="tela oculto" id="telaDraftCompleto">
+      <div class="caixa-dialogo">
+        <p class="titulo-fase">Time Completo!</p>
+        <p class="subtitulo">Seu squad está pronto para os Ginásios.</p>
+        <button class="btn-primario" id="btnAvancarBatalha">▶ IR PARA OS GINÁSIOS</button>
+      </div>
+    </section>
+
+    <!-- Tela Pré-Jogo -->
+    <section class="tela oculto" id="telaPreJogo">
+      <div class="oponente-card" id="oponenteCard"><!-- gerado via JS --></div>
+      <p class="instrucao" id="instrucaoPreJogo">Arraste para definir a ordem de entrada</p>
+      <ul class="lista-drag" id="listaDrag"><!-- gerado via JS --></ul>
+      <div class="acoes-pre">
+        <button class="btn-secundario oculto" id="btnRedraft">↺ RE-DRAFT</button>
+        <button class="btn-primario" id="btnBatalhar">⚔ BATALHAR</button>
+      </div>
+    </section>
+
+    <!-- Tela de Batalha -->
+    <section class="tela tela-batalha oculto" id="telaBatalha">
+
+      <!-- Status das equipes (mini sprites) -->
+      <div class="batalha-status">
+        <div class="status-row" id="spritesOponente"></div>
+        <div class="status-row" id="spritesJogador"></div>
+      </div>
+
+      <!-- Arena principal -->
+      <div class="arena-batalha">
+        <div class="arena-adv">
+          <img class="sprite-arena" id="spriteArenaAdv" src="" alt="" />
+        </div>
+        <div class="arena-jog">
+          <img class="sprite-arena" id="spriteArenaJog" src="" alt="" />
+        </div>
+      </div>
+
+      <!-- Caixa de diálogo estilo FireRed -->
+      <div class="dialogo-batalha" id="logBatalha"></div>
+
+      <button class="btn-primario btn-proximo oculto" id="btnProximo"></button>
+    </section>
+
+    <!-- Tela Fim de Campanha -->
+    <section class="tela oculto" id="telaFim">
+      <div class="caixa-dialogo" id="caixaFim"><!-- gerado via JS --></div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
