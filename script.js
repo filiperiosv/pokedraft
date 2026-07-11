@@ -384,8 +384,8 @@ const BST_LOOKUP = [
 ];
 
 const MAX_POKEMON_ID   = 251; // aumentar aqui para novas gerações
-const BST_LIMITE_MEDIO = 400;
-const BST_LIMITE_FORTE = 500;
+const BST_LIMITE_MEDIO = 421;
+const BST_LIMITE_FORTE = 480;
 const REDRAFT_GINASIO_MINIMO = 6; // desbloqueado após a 6ª batalha
 
 // Dificuldade cresce por posição — independente de quem foi sorteado
@@ -425,7 +425,7 @@ for (let i = 1; i <= MAX_POKEMON_ID; i++) {
 
 function idAleatorio() {
   const r = Math.random();
-  const tier = r < 0.20 ? TIER_FRACO : r < 0.55 ? TIER_MEDIO : TIER_FORTE;
+  const tier = r < 0.15 ? TIER_FRACO : r < 0.50 ? TIER_MEDIO : TIER_FORTE;
   return tier[Math.floor(Math.random() * tier.length)];
 }
 
