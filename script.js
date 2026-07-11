@@ -390,9 +390,9 @@ const REDRAFT_GINASIO_MINIMO = 6; // desbloqueado após a 6ª batalha
 
 // Dificuldade cresce por posição — independente de quem foi sorteado
 const DIF_POR_POSICAO = [
-  1.13, 1.18, 1.22, 1.26, 1.23, 1.26, 1.30, 1.34, // 8 ginásios (+5% nos 4 primeiros)
-  1.33, 1.39, 1.44,                                  // 3 Elite Four (-5%)
-  1.52,                                               // Campeão Lance (-5%)
+  1.10, 1.15, 1.18, 1.20, 1.20, 1.22, 1.20, 1.25, // 8 ginásios
+  1.22, 1.28, 1.35,                                  // 3 Elite Four
+  1.28,                                               // Campeão Lance
 ];
 
 function embaralhar(arr) {
