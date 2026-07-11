@@ -525,6 +525,42 @@ function restaurarTime() {
   estado.squad.forEach(pk => { pk.forcaAtual = forcaBase(pk); });
 }
 
+// ===== SVGs de resultado =====
+
+const SVG_POKEBOLA = `<svg viewBox="0 0 48 48" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+  <path d="M24 2A22 22 0 0 1 46 24H2A22 22 0 0 1 24 2Z" fill="#888"/>
+  <path d="M24 46A22 22 0 0 1 2 24H46A22 22 0 0 1 24 46Z" fill="#ddd"/>
+  <circle cx="24" cy="24" r="22" fill="none" stroke="#444" stroke-width="2.5"/>
+  <line x1="2" y1="24" x2="46" y2="24" stroke="#444" stroke-width="3"/>
+  <circle cx="24" cy="24" r="6" fill="#ddd" stroke="#444" stroke-width="2.5"/>
+  <circle cx="24" cy="24" r="3" fill="#888"/>
+</svg>`;
+
+const SVG_TROFEU = `<svg viewBox="0 0 96 122" width="72" height="92" xmlns="http://www.w3.org/2000/svg">
+  <rect x="22" y="102" width="52" height="18" rx="2" fill="#7a1010" stroke="#400808" stroke-width="1.5"/>
+  <rect x="28" y="96" width="40" height="8" rx="1" fill="#9a1a1a" stroke="#400808" stroke-width="1.5"/>
+  <rect x="40" y="44" width="16" height="54" rx="1" fill="#D4A017" stroke="#7a5c00" stroke-width="1.5"/>
+  <rect x="41.5" y="46" width="4" height="50" rx="1" fill="rgba(255,240,80,0.4)"/>
+  <rect x="33" y="88" width="30" height="8" rx="2" fill="#C8960C" stroke="#7a5c00" stroke-width="1.3"/>
+  <rect x="36" y="78" width="24" height="6" rx="1" fill="#C8960C" stroke="#7a5c00" stroke-width="1.2"/>
+  <rect x="36" y="66" width="24" height="6" rx="1" fill="#C8960C" stroke="#7a5c00" stroke-width="1.2"/>
+  <rect x="36" y="54" width="24" height="6" rx="1" fill="#C8960C" stroke="#7a5c00" stroke-width="1.2"/>
+  <rect x="32" y="40" width="32" height="6" rx="2" fill="#B8860B" stroke="#7a5c00" stroke-width="1.5"/>
+  <path d="M31 28 C26 14 10 8 2 12 C8 24 20 32 30 34 Z" fill="#e0e0e0" stroke="#b0b0b0" stroke-width="1"/>
+  <path d="M31 30 C24 18 12 14 5 18 C12 28 22 34 30 36 Z" fill="#eeeeee" stroke="#c0c0c0" stroke-width="0.8"/>
+  <path d="M31 32 C26 22 16 20 11 23 C17 30 24 35 30 36 Z" fill="#f6f6f6" stroke="#d0d0d0" stroke-width="0.6"/>
+  <path d="M65 28 C70 14 86 8 94 12 C88 24 76 32 66 34 Z" fill="#e0e0e0" stroke="#b0b0b0" stroke-width="1"/>
+  <path d="M65 30 C72 18 84 14 91 18 C84 28 74 34 66 36 Z" fill="#eeeeee" stroke="#c0c0c0" stroke-width="0.8"/>
+  <path d="M65 32 C70 22 80 20 85 23 C79 30 72 35 66 36 Z" fill="#f6f6f6" stroke="#d0d0d0" stroke-width="0.6"/>
+  <path d="M27 26 A21 21 0 0 1 69 26 Z" fill="#C8960C"/>
+  <path d="M27 26 A21 21 0 0 0 69 26 Z" fill="#FFD700"/>
+  <circle cx="48" cy="26" r="21" fill="none" stroke="#7a5c00" stroke-width="2"/>
+  <line x1="27" y1="26" x2="69" y2="26" stroke="#7a5c00" stroke-width="2.5"/>
+  <circle cx="48" cy="26" r="6.5" fill="#FFE55C" stroke="#7a5c00" stroke-width="2"/>
+  <circle cx="48" cy="26" r="3.5" fill="#B8860B"/>
+  <ellipse cx="39" cy="15" rx="7" ry="4.5" fill="rgba(255,255,255,0.18)" transform="rotate(-25 39 15)"/>
+</svg>`;
+
 // ===== FASE 1: DRAFT =====
 
 async function iniciarRodadaDraft() {
@@ -699,13 +735,17 @@ function renderPreJogo() {
     hintPocao.className = 'hint-redraft hint-pocao';
     document.querySelector('.acoes-pre').insertAdjacentElement('afterbegin', hintPocao);
   }
-  if (estado.pocaoDisponivel) {
-    hintPocao.textContent = '💊 Poção disponível para o último Pokémon!';
-    hintPocao.classList.remove('oculto');
-  } else if (estado.ginasioAtual < 9) {
-    const faltam = 9 - estado.ginasioAtual;
-    hintPocao.textContent = `💊 Poção disponível em ${faltam} batalha${faltam > 1 ? 's' : ''}`;
-    hintPocao.classList.remove('oculto');
+  if (estado.redraftUsado) {
+    if (estado.pocaoDisponivel) {
+      hintPocao.textContent = '🧪 Poção disponível para o último Pokémon!';
+      hintPocao.classList.remove('oculto');
+    } else if (estado.ginasioAtual < 9) {
+      const faltam = 9 - estado.ginasioAtual;
+      hintPocao.textContent = `🧪 Poção disponível em ${faltam} batalha${faltam > 1 ? 's' : ''}`;
+      hintPocao.classList.remove('oculto');
+    } else {
+      hintPocao.classList.add('oculto');
+    }
   } else {
     hintPocao.classList.add('oculto');
   }
@@ -1250,39 +1290,8 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
         : `<div class="insignia-fim vazia" title="${g.insignia.nome} Badge"></div>`;
     }).join('');
 
-  const svgPokebola = `<svg viewBox="0 0 48 48" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-    <path d="M24 2A22 22 0 0 1 46 24H2A22 22 0 0 1 24 2Z" fill="#888"/>
-    <path d="M24 46A22 22 0 0 1 2 24H46A22 22 0 0 1 24 46Z" fill="#ddd"/>
-    <circle cx="24" cy="24" r="22" fill="none" stroke="#444" stroke-width="2.5"/>
-    <line x1="2" y1="24" x2="46" y2="24" stroke="#444" stroke-width="3"/>
-    <circle cx="24" cy="24" r="6" fill="#ddd" stroke="#444" stroke-width="2.5"/>
-    <circle cx="24" cy="24" r="3" fill="#888"/>
-  </svg>`;
-
-  const svgTrofeu = `<svg viewBox="0 0 96 122" width="72" height="92" xmlns="http://www.w3.org/2000/svg">
-    <rect x="22" y="102" width="52" height="18" rx="2" fill="#7a1010" stroke="#400808" stroke-width="1.5"/>
-    <rect x="28" y="96" width="40" height="8" rx="1" fill="#9a1a1a" stroke="#400808" stroke-width="1.5"/>
-    <rect x="40" y="44" width="16" height="54" rx="1" fill="#D4A017" stroke="#7a5c00" stroke-width="1.5"/>
-    <rect x="41.5" y="46" width="4" height="50" rx="1" fill="rgba(255,240,80,0.4)"/>
-    <rect x="33" y="88" width="30" height="8" rx="2" fill="#C8960C" stroke="#7a5c00" stroke-width="1.3"/>
-    <rect x="36" y="78" width="24" height="6" rx="1" fill="#C8960C" stroke="#7a5c00" stroke-width="1.2"/>
-    <rect x="36" y="66" width="24" height="6" rx="1" fill="#C8960C" stroke="#7a5c00" stroke-width="1.2"/>
-    <rect x="36" y="54" width="24" height="6" rx="1" fill="#C8960C" stroke="#7a5c00" stroke-width="1.2"/>
-    <rect x="32" y="40" width="32" height="6" rx="2" fill="#B8860B" stroke="#7a5c00" stroke-width="1.5"/>
-    <path d="M31 28 C26 14 10 8 2 12 C8 24 20 32 30 34 Z" fill="#e0e0e0" stroke="#b0b0b0" stroke-width="1"/>
-    <path d="M31 30 C24 18 12 14 5 18 C12 28 22 34 30 36 Z" fill="#eeeeee" stroke="#c0c0c0" stroke-width="0.8"/>
-    <path d="M31 32 C26 22 16 20 11 23 C17 30 24 35 30 36 Z" fill="#f6f6f6" stroke="#d0d0d0" stroke-width="0.6"/>
-    <path d="M65 28 C70 14 86 8 94 12 C88 24 76 32 66 34 Z" fill="#e0e0e0" stroke="#b0b0b0" stroke-width="1"/>
-    <path d="M65 30 C72 18 84 14 91 18 C84 28 74 34 66 36 Z" fill="#eeeeee" stroke="#c0c0c0" stroke-width="0.8"/>
-    <path d="M65 32 C70 22 80 20 85 23 C79 30 72 35 66 36 Z" fill="#f6f6f6" stroke="#d0d0d0" stroke-width="0.6"/>
-    <path d="M27 26 A21 21 0 0 1 69 26 Z" fill="#C8960C"/>
-    <path d="M27 26 A21 21 0 0 0 69 26 Z" fill="#FFD700"/>
-    <circle cx="48" cy="26" r="21" fill="none" stroke="#7a5c00" stroke-width="2"/>
-    <line x1="27" y1="26" x2="69" y2="26" stroke="#7a5c00" stroke-width="2.5"/>
-    <circle cx="48" cy="26" r="6.5" fill="#FFE55C" stroke="#7a5c00" stroke-width="2"/>
-    <circle cx="48" cy="26" r="3.5" fill="#B8860B"/>
-    <ellipse cx="39" cy="15" rx="7" ry="4.5" fill="rgba(255,255,255,0.18)" transform="rotate(-25 39 15)"/>
-  </svg>`;
+  const svgPokebola = SVG_POKEBOLA;
+  const svgTrofeu   = SVG_TROFEU;
 
   caixa.innerHTML = `
     <div class="resultado-icone">${vitoria ? svgTrofeu : svgPokebola}</div>
@@ -1294,7 +1303,8 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
     </div>
     <div class="texto-compartilhar">${txtCompartilhar}</div>
     <div class="btns-fim">
-      <button class="btn-copiar" id="btnCopiar">📋 COPIAR E COMPARTILHAR</button>
+      <button class="btn-imagem" id="btnImagem">📸 COMPARTILHAR IMAGEM</button>
+      <button class="btn-copiar" id="btnCopiar">📋 COPIAR TEXTO</button>
       <button class="btn-reiniciar" id="btnReiniciar">↺ JOGAR NOVAMENTE</button>
     </div>
   `;
@@ -1310,6 +1320,27 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
   });
 
   document.getElementById('btnReiniciar').addEventListener('click', () => location.reload());
+
+  document.getElementById('btnImagem').addEventListener('click', async () => {
+    const btn = document.getElementById('btnImagem');
+    btn.textContent = '⏳ GERANDO...';
+    btn.disabled = true;
+    try {
+      const blob = await gerarImagemResultado(vitoria, ginDerrota, mvpNome);
+      const file = new File([blob], 'pokedraft.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'PokéDraft' });
+      } else {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        setTimeout(() => URL.revokeObjectURL(url), 15000);
+      }
+    } catch (err) {
+      if (err.name !== 'AbortError') console.error(err);
+    }
+    btn.textContent = '📸 COMPARTILHAR IMAGEM';
+    btn.disabled = false;
+  });
 }
 
 function gerarTexto(vitoria, chegouAte, mvpNome) {
@@ -1320,6 +1351,179 @@ Cheguei até: ${chegouAte}
 MVP: ${mvpNome}
 Time: ${squad}
 Jogue em: pokedraft.game`;
+}
+
+// ===== COMPARTILHAR COMO IMAGEM =====
+
+function carregarImagem(src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload  = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+async function gerarImagemResultado(vitoria, ginDerrota, mvpNome) {
+  const W = 360, S = 2;
+  const canvas = document.createElement('canvas');
+  canvas.width  = W * S;
+
+  // Primeira passagem para calcular altura
+  const calcCtx = document.createElement('canvas').getContext('2d');
+  const H = await _desenharCard(calcCtx, W, vitoria, ginDerrota, mvpNome, true);
+
+  canvas.height = H * S;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(S, S);
+  await _desenharCard(ctx, W, vitoria, ginDerrota, mvpNome, false);
+
+  return new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+}
+
+async function _desenharCard(ctx, W, vitoria, ginDerrota, mvpNome, somenteCalcular) {
+  const beige   = '#f0e8d0';
+  const beigeEsc= '#c8a87a';
+  const preto   = '#1a1a1a';
+  const vermelho= '#c8342a';
+  const dourado = '#b8860b';
+  const cinzaT  = '#555';
+  const verdeOk = '#155a28';
+
+  const mono = '"Courier New", Courier, monospace';
+
+  function texto(t, x, y, cor, tam, negrito = false) {
+    if (somenteCalcular) return;
+    ctx.fillStyle = cor;
+    ctx.font = `${negrito ? 'bold ' : ''}${tam}px ${mono}`;
+    ctx.textAlign = x === W / 2 ? 'center' : 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t, x, y);
+  }
+
+  function linha(y) {
+    if (somenteCalcular) return;
+    ctx.fillStyle = beigeEsc;
+    ctx.fillRect(20, y - 1, W - 40, 1);
+  }
+
+  let y = 0;
+
+  // Fundo
+  if (!somenteCalcular) {
+    ctx.fillStyle = beige;
+    ctx.fillRect(0, 0, W, 9999);
+    ctx.strokeStyle = preto;
+    ctx.lineWidth = 4;
+    // borda será desenhada depois — usamos y final
+  }
+
+  y = 38;
+  texto('PokéDraft', W / 2, y, vermelho, 18, true);
+
+  y += 24;
+  linha(y);
+
+  // Ícone SVG
+  const svgStr  = vitoria ? SVG_TROFEU : SVG_POKEBOLA;
+  const iconW   = vitoria ? 72 : 60;
+  const iconH   = vitoria ? 92 : 60;
+  const iconTop = y + 14;
+  if (!somenteCalcular) {
+    const svgUrl = 'data:image/svg+xml,' + encodeURIComponent(svgStr);
+    const iconImg = await carregarImagem(svgUrl);
+    if (iconImg) ctx.drawImage(iconImg, W / 2 - iconW / 2, iconTop, iconW, iconH);
+  }
+  y = iconTop + iconH + 16;
+
+  texto(vitoria ? 'CAMPEÃO!' : 'DERROTA...', W / 2, y, vitoria ? verdeOk : vermelho, 15, true);
+  y += 22;
+
+  const subtxt = vitoria ? 'Conquistou a Liga Pokémon!' : `Eliminado por ${ginDerrota?.nome || '?'}.`;
+  texto(subtxt, W / 2, y, cinzaT, 8);
+  y += 22;
+
+  linha(y);
+  y += 16;
+
+  // Insígnias
+  const badgeGins = estado.liga.slice(0, 8).filter(g => g.insignia);
+  const BSZ = 28, BGAP = 5;
+  const totalBW = badgeGins.length * BSZ + (badgeGins.length - 1) * BGAP;
+  let bx = W / 2 - totalBW / 2;
+
+  if (!somenteCalcular) {
+    const badgeImgs = await Promise.all(badgeGins.map(g => carregarImagem(`badges/${g.insignia.arquivo}`)));
+
+    texto(`${estado.insignias.length}/8 insígnias`, W / 2, y, cinzaT, 8);
+    y += 16;
+
+    for (let i = 0; i < badgeGins.length; i++) {
+      const conquistada = estado.insignias.includes(badgeGins[i].insignia.nome);
+      ctx.fillStyle = conquistada ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.08)';
+      ctx.beginPath();
+      ctx.arc(bx + BSZ / 2, y + BSZ / 2, BSZ / 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = conquistada ? dourado : '#aaa';
+      ctx.lineWidth = conquistada ? 1.5 : 1;
+      ctx.beginPath();
+      ctx.arc(bx + BSZ / 2, y + BSZ / 2, BSZ / 2, 0, Math.PI * 2);
+      ctx.stroke();
+      if (badgeImgs[i]) {
+        ctx.globalAlpha = conquistada ? 1 : 0.18;
+        ctx.drawImage(badgeImgs[i], bx + 4, y + 4, BSZ - 8, BSZ - 8);
+        ctx.globalAlpha = 1;
+      }
+      bx += BSZ + BGAP;
+    }
+  } else {
+    // modo cálculo: só avança y como se tivesse desenhado
+    y += 16;
+  }
+  y += BSZ + 18;
+
+  linha(y);
+  y += 18;
+
+  // MVP
+  texto(`MVP: ${mvpNome}`, 24, y, preto, 9, true);
+  y += 20;
+
+  texto('Time:', 24, y, cinzaT, 8);
+  y += 16;
+
+  const nomes  = estado.squad.map(p => nomePT(p.nome) + (p.isShiny ? ' ★' : ''));
+  const linha1 = nomes.slice(0, 3).join(' · ');
+  const linha2 = nomes.slice(3).join(' · ');
+  ctx.font = `7px ${mono}`;
+  ctx.textAlign = 'center';
+  if (!somenteCalcular) {
+    ctx.fillStyle = preto;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(linha1, W / 2, y);
+  }
+  y += 14;
+  if (!somenteCalcular) ctx.fillText(linha2, W / 2, y);
+  y += 22;
+
+  linha(y);
+  y += 16;
+
+  texto('pokedraft.game', W / 2, y, cinzaT, 7);
+  y += 24;
+
+  // Borda (só no modo real, agora que temos a altura final)
+  if (!somenteCalcular) {
+    ctx.strokeStyle = preto;
+    ctx.lineWidth = 4;
+    ctx.strokeRect(3, 3, W - 6, y - 6);
+    ctx.strokeStyle = dourado;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(10, 10, W - 20, y - 20);
+  }
+
+  return y;
 }
 
 // ===== EVENTOS INICIAIS =====

@@ -904,7 +904,7 @@ body {
 }
 
 .hint-pocao {
-  color: #1565c0;
+  color: #777;
 }
 
 /* ===== Tela de Batalha ===== */
@@ -1222,6 +1222,27 @@ body {
   text-align: left;
   white-space: pre-line;
   word-break: break-word;
+}
+
+.btn-imagem {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  background: #1565c0;
+  color: var(--branco);
+  border: 2px solid var(--preto);
+  box-shadow: 3px 3px 0 var(--preto);
+  padding: 9px 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 4px;
+}
+.btn-imagem:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--preto);
+}
+.btn-imagem:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 .btn-copiar {
