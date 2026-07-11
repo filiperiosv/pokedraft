@@ -66,7 +66,7 @@ const POOL_ELITE = [
   { nome: 'Karen',   titulo: 'Elite Four', especialidade: 'Sombrio 🌑',   aceId: 229, time: [197,45,94,198,215,229],  trainerSprite: `${_PS}karen.png`        },
 ];
 
-const CAMPEAO = { nome: 'Lance', titulo: 'Campeão — Elite Four', especialidade: 'Dragão 🐉', aceId: 149, time: [130,148,148,142,148,149], trainerSprite: `${_PS}lance.png` };
+const CAMPEAO = { nome: 'Lance', titulo: 'Campeão — Elite Four', especialidade: 'Dragão 🐉', aceId: 148, time: [130,148,148,142,148,148], trainerSprite: `${_PS}lance.png` };
 
 // ===== Tabela de vantagens de tipo =====
 const VANTAGENS = {
@@ -390,9 +390,9 @@ const REDRAFT_GINASIO_MINIMO = 6; // desbloqueado após a 6ª batalha
 
 // Dificuldade cresce por posição — independente de quem foi sorteado
 const DIF_POR_POSICAO = [
-  1.10, 1.15, 1.18, 1.20, 1.20, 1.22, 1.20, 1.25, // 8 ginásios
-  1.22, 1.28, 1.35,                                  // 3 Elite Four
-  1.23,                                               // Campeão Lance (~20% mais forte)
+  1.05, 1.08, 1.10, 1.12, 1.12, 1.14, 1.12, 1.16, // 8 ginásios
+  1.14, 1.18, 1.22,                                  // 3 Elite Four
+  1.15,                                               // Campeão Lance
 ];
 
 function embaralhar(arr) {
@@ -1005,7 +1005,7 @@ async function iniciarBatalha() {
   try {
     const timeAdv = await Promise.all(gin.time.map(buscarPokemon));
     // dif: multiplicador de dificuldade calibrado por ginásio
-    timeAdv.forEach(pk => { pk.forcaAtual = pk.bst * gin.dif; });
+    timeAdv.forEach(pk => { pk.forcaBase = pk.bst; pk.forcaAtual = pk.bst * gin.dif; });
     timeAdversarioGlobal = timeAdv;
     renderTelaBatalha(gin, estado.squad, timeAdv);
   } catch (err) {
@@ -1016,10 +1016,12 @@ async function iniciarBatalha() {
 
 function simularBatalha(timeJ, timeA, pocaoDisp = false) {
   const log = [];
-  const forcasJ    = timeJ.map(pk => pk.forcaAtual);
-  const forcasA    = timeA.map(pk => pk.forcaAtual);
-  const forcasJBase = [...forcasJ];
-  const forcasABase = [...forcasA];
+  const forcasJ      = timeJ.map(pk => pk.forcaAtual);
+  const forcasA      = timeA.map(pk => pk.forcaAtual);
+  const forcasJBase  = [...forcasJ];
+  const forcasABase  = [...forcasA];
+  // Fadiga usa BST bruto do oponente (sem multiplicador de dificuldade)
+  const forcasAFadiga = timeA.map(pk => pk.forcaBase ?? pk.forcaAtual);
   let iJ = 0, iA = 0;
   let pocaoAtivada = false;
 
@@ -1043,7 +1045,7 @@ function simularBatalha(timeJ, timeA, pocaoDisp = false) {
     const fA    = forcasA[iA] * multA * rngA;
 
     if (fJ >= fA) {
-      forcasJ[iJ] = Math.max(0, forcasJ[iJ] - forcasA[iA]);
+      forcasJ[iJ] = Math.max(0, forcasJ[iJ] - forcasAFadiga[iA]);
       forcasA[iA] = 0;
       log.push({ vitoria: 'jogador',    venc: pkJ, derrota: pkA, iJ, iA, multJ, multA,
                  hpJSnap: [...forcasJ], hpASnap: [...forcasA], hpJBase: forcasJBase, hpABase: forcasABase });
