@@ -9,6 +9,7 @@ const estado = {
   vitoriasPorPk: {},
   insignias: [],
   liga: [],
+  pocaoDisponivel: false,
 };
 
 const SQUAD_MAX = 6;
@@ -389,9 +390,9 @@ const REDRAFT_GINASIO_MINIMO = 6; // desbloqueado após a 6ª batalha
 
 // Dificuldade cresce por posição — independente de quem foi sorteado
 const DIF_POR_POSICAO = [
-  1.08, 1.12, 1.16, 1.20, 1.23, 1.26, 1.30, 1.34, // 8 ginásios
-  1.40, 1.46, 1.52,                                  // 3 Elite Four
-  1.60,                                               // Campeão Lance
+  1.13, 1.18, 1.22, 1.26, 1.23, 1.26, 1.30, 1.34, // 8 ginásios (+5% nos 4 primeiros)
+  1.33, 1.39, 1.44,                                  // 3 Elite Four (-5%)
+  1.52,                                               // Campeão Lance (-5%)
 ];
 
 function embaralhar(arr) {
@@ -690,6 +691,25 @@ function renderPreJogo() {
     hintRedraft.classList.add('oculto');
   }
 
+  // Indicador de poção
+  let hintPocao = document.getElementById('hintPocao');
+  if (!hintPocao) {
+    hintPocao = document.createElement('p');
+    hintPocao.id = 'hintPocao';
+    hintPocao.className = 'hint-redraft hint-pocao';
+    document.querySelector('.acoes-pre').insertAdjacentElement('afterbegin', hintPocao);
+  }
+  if (estado.pocaoDisponivel) {
+    hintPocao.textContent = '💊 Poção disponível para o último Pokémon!';
+    hintPocao.classList.remove('oculto');
+  } else if (estado.ginasioAtual < 9) {
+    const faltam = 9 - estado.ginasioAtual;
+    hintPocao.textContent = `💊 Poção disponível em ${faltam} batalha${faltam > 1 ? 's' : ''}`;
+    hintPocao.classList.remove('oculto');
+  } else {
+    hintPocao.classList.add('oculto');
+  }
+
   document.getElementById('instrucaoPreJogo').textContent = 'Arraste para definir a ordem de entrada';
   document.getElementById('btnBatalhar').onclick = () => iniciarBatalha();
 
@@ -936,6 +956,12 @@ async function iniciarBatalha() {
   mostrar(telaLoading);
   textoLoading.textContent = 'Preparando batalha...';
   const gin = estado.liga[estado.ginasioAtual];
+
+  // Poção concedida ao chegar na batalha 10 (índice 9)
+  if (estado.ginasioAtual === 9 && !estado.pocaoDisponivel) {
+    estado.pocaoDisponivel = true;
+  }
+
   try {
     const timeAdv = await Promise.all(gin.time.map(buscarPokemon));
     // dif: multiplicador de dificuldade calibrado por ginásio
@@ -948,15 +974,24 @@ async function iniciarBatalha() {
   }
 }
 
-function simularBatalha(timeJ, timeA) {
+function simularBatalha(timeJ, timeA, pocaoDisp = false) {
   const log = [];
   const forcasJ    = timeJ.map(pk => pk.forcaAtual);
   const forcasA    = timeA.map(pk => pk.forcaAtual);
-  const forcasJBase = [...forcasJ]; // forças iniciais para calcular % HP
+  const forcasJBase = [...forcasJ];
   const forcasABase = [...forcasA];
   let iJ = 0, iA = 0;
+  let pocaoAtivada = false;
 
   while (iJ < 6 && iA < 6) {
+    // Poção: ativa quando o último Pokémon do jogador entra na luta
+    if (iJ === 5 && pocaoDisp && !pocaoAtivada) {
+      forcasJ[5] += 20;
+      forcasJBase[5] += 20;
+      pocaoAtivada = true;
+      log.push({ tipo: 'pocao', pk: timeJ[5] });
+    }
+
     const pkJ = timeJ[iJ];
     const pkA = timeA[iA];
     const multJ = getMultTipo(pkJ.tipos, pkA.tipos);
@@ -967,7 +1002,6 @@ function simularBatalha(timeJ, timeA) {
     const fA    = forcasA[iA] * multA * rngA;
 
     if (fJ >= fA) {
-      // Fadiga: cansa pela força bruta do oponente (sem tipo/RNG) — impede regeneração
       forcasJ[iJ] = Math.max(0, forcasJ[iJ] - forcasA[iA]);
       forcasA[iA] = 0;
       log.push({ vitoria: 'jogador',    venc: pkJ, derrota: pkA, iJ, iA, multJ, multA,
@@ -982,7 +1016,7 @@ function simularBatalha(timeJ, timeA) {
     }
   }
 
-  return { log, vitoria: iA >= 6 };
+  return { log, vitoria: iA >= 6, pocaoAtivada };
 }
 
 function criarSlotBatalha(id, src, alt) {
@@ -1015,10 +1049,10 @@ function atualizarBarrasHP(hpJSnap, hpASnap, hpJBase, hpABase) {
 }
 
 function renderTelaBatalha(gin, timeJ, timeA) {
-  // Cópias rasas para simular sem mutar o squad original
   const copiaJ = timeJ.map(pk => ({ ...pk }));
   const copiaA = timeA.map(pk => ({ ...pk }));
-  const resultado = simularBatalha(copiaJ, copiaA);
+  const resultado = simularBatalha(copiaJ, copiaA, estado.pocaoDisponivel);
+  if (resultado.pocaoAtivada) estado.pocaoDisponivel = false;
 
   const spritesOp = document.getElementById('spritesOponente');
   const spritesJg = document.getElementById('spritesJogador');
@@ -1060,6 +1094,13 @@ function animarBatalha(logEntries, vitoria, gin) {
     await esperar(600);
 
     for (const e of logEntries) {
+      // Entrada especial: poção usada
+      if (e.tipo === 'pocao') {
+        adicionarLog(logEl, `💊 ${nomePT(e.pk.nome)} usou Poção! +20 de força!`, 'pocao');
+        await esperar(900);
+        continue;
+      }
+
       const pkVenc   = nomePT(e.venc.nome);
       const pkDerrot = nomePT(e.derrota.nome);
 
