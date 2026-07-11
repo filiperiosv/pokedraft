@@ -51,7 +51,7 @@ const POOL_GINASIOS = [
     trainerSprite: `${_PS}jasmine.png`,      insignia: { nome: 'Mineral', arquivo: 'mineral.png' } },
   { nome: 'Pryce',     titulo: 'Líder — Mahogany Town',   especialidade: 'Gelo ❄️',     aceId: 221, time: [86,87,87,220,124,221],
     trainerSprite: `${_PS}pryce.png`,        insignia: { nome: 'Glacier', arquivo: 'glacier.png' } },
-  { nome: 'Clair',     titulo: 'Líder — Blackthorn City', especialidade: 'Dragão 🐉',   aceId: 230, time: [147,148,148,149,149,230],
+  { nome: 'Clair',     titulo: 'Líder — Blackthorn City', especialidade: 'Dragão 🐉',   aceId: 230, time: [147,148,148,130,149,230],
     trainerSprite: `${_PS}clair.png`,        insignia: { nome: 'Rising',  arquivo: 'rising.png'  } },
 ];
 
@@ -66,7 +66,7 @@ const POOL_ELITE = [
   { nome: 'Karen',   titulo: 'Elite Four', especialidade: 'Sombrio 🌑',   aceId: 229, time: [197,45,94,198,215,229],  trainerSprite: `${_PS}karen.png`        },
 ];
 
-const CAMPEAO = { nome: 'Lance', titulo: 'Campeão — Elite Four', especialidade: 'Dragão 🐉', aceId: 149, time: [130,147,148,142,230,149], trainerSprite: `${_PS}lance.png` };
+const CAMPEAO = { nome: 'Lance', titulo: 'Campeão — Elite Four', especialidade: 'Dragão 🐉', aceId: 149, time: [148,147,148,142,230,149], trainerSprite: `${_PS}lance.png` };
 
 // ===== Tabela de vantagens de tipo =====
 const VANTAGENS = {
