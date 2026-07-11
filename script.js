@@ -34,10 +34,10 @@ const POOL_GINASIOS = [
     trainerSprite: `${_PS}sabrina-gen3.png`, insignia: { nome: 'Marsh',   arquivo: 'marsh.png'   } },
   { nome: 'Blaine',    titulo: 'Líder — Cinnabar Island', especialidade: 'Fogo 🔥',     aceId: 59,  time: [58,58,77,78,126,59],
     trainerSprite: `${_PS}blaine.png`,       insignia: { nome: 'Volcano', arquivo: 'volcano.png' } },
-  { nome: 'Giovanni',  titulo: 'Líder — Viridian City',   especialidade: 'Terra 🌍',    aceId: 34,  time: [27,50,51,34,111,34],
+  { nome: 'Giovanni',  titulo: 'Líder — Viridian City',   especialidade: 'Terra 🌍',    aceId: 34,  time: [27,50,51,105,111,34],
     trainerSprite: `${_PS}giovanni.png`,     insignia: { nome: 'Earth',   arquivo: 'earth.png'   } },
   // Johto
-  { nome: 'Falkner',   titulo: 'Líder — Violet City',     especialidade: 'Voador 🦅',   aceId: 18,  time: [16,17,17,85,18,18],
+  { nome: 'Falkner',   titulo: 'Líder — Violet City',     especialidade: 'Voador 🦅',   aceId: 18,  time: [16,17,17,85,22,18],
     trainerSprite: `${_PS}falkner.png`,      insignia: { nome: 'Zephyr',  arquivo: 'zephyr.png'  } },
   { nome: 'Bugsy',     titulo: 'Líder — Azalea Town',     especialidade: 'Inseto 🐛',   aceId: 212, time: [13,167,168,123,214,212],
     trainerSprite: `${_PS}bugsy.png`,        insignia: { nome: 'Hive',    arquivo: 'hive.png'    } },
@@ -49,9 +49,9 @@ const POOL_GINASIOS = [
     trainerSprite: `${_PS}chuck.png`,        insignia: { nome: 'Storm',   arquivo: 'storm.png'   } },
   { nome: 'Jasmine',   titulo: 'Líder — Olivine City',    especialidade: 'Aço ⚙️',      aceId: 208, time: [81,82,82,205,227,208],
     trainerSprite: `${_PS}jasmine.png`,      insignia: { nome: 'Mineral', arquivo: 'mineral.png' } },
-  { nome: 'Pryce',     titulo: 'Líder — Mahogany Town',   especialidade: 'Gelo ❄️',     aceId: 221, time: [86,87,87,220,221,221],
+  { nome: 'Pryce',     titulo: 'Líder — Mahogany Town',   especialidade: 'Gelo ❄️',     aceId: 221, time: [86,87,87,220,124,221],
     trainerSprite: `${_PS}pryce.png`,        insignia: { nome: 'Glacier', arquivo: 'glacier.png' } },
-  { nome: 'Clair',     titulo: 'Líder — Blackthorn City', especialidade: 'Dragão 🐉',   aceId: 230, time: [147,148,148,148,230,230],
+  { nome: 'Clair',     titulo: 'Líder — Blackthorn City', especialidade: 'Dragão 🐉',   aceId: 230, time: [147,148,148,149,149,230],
     trainerSprite: `${_PS}clair.png`,        insignia: { nome: 'Rising',  arquivo: 'rising.png'  } },
 ];
 
@@ -61,12 +61,12 @@ const POOL_ELITE = [
   { nome: 'Bruno',   titulo: 'Elite Four', especialidade: 'Luta 🥊',      aceId: 68,  time: [56,57,237,107,106,68],   trainerSprite: `${_PS}bruno.png`        },
   { nome: 'Agatha',  titulo: 'Elite Four', especialidade: 'Fantasma 👻',  aceId: 94,  time: [92,92,93,93,24,94],      trainerSprite: `${_PS}agatha-gen3.png`  },
   // Johto E4
-  { nome: 'Will',    titulo: 'Elite Four', especialidade: 'Psíquico 🔮',  aceId: 178, time: [177,178,124,103,80,178], trainerSprite: `${_PS}will.png`         },
+  { nome: 'Will',    titulo: 'Elite Four', especialidade: 'Psíquico 🔮',  aceId: 178, time: [177,196,124,103,80,178], trainerSprite: `${_PS}will.png`         },
   { nome: 'Koga',    titulo: 'Elite Four', especialidade: 'Veneno ☠️',   aceId: 169, time: [168,49,205,88,110,169],  trainerSprite: `${_PS}koga.png`         },
   { nome: 'Karen',   titulo: 'Elite Four', especialidade: 'Sombrio 🌑',   aceId: 229, time: [197,45,94,198,215,229],  trainerSprite: `${_PS}karen.png`        },
 ];
 
-const CAMPEAO = { nome: 'Lance', titulo: 'Campeão — Elite Four', especialidade: 'Dragão 🐉', aceId: 148, time: [130,148,148,142,148,148], trainerSprite: `${_PS}lance.png` };
+const CAMPEAO = { nome: 'Lance', titulo: 'Campeão — Elite Four', especialidade: 'Dragão 🐉', aceId: 149, time: [130,147,148,142,230,149], trainerSprite: `${_PS}lance.png` };
 
 // ===== Tabela de vantagens de tipo =====
 const VANTAGENS = {
