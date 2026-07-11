@@ -1026,10 +1026,11 @@ function simularBatalha(timeJ, timeA, pocaoDisp = false) {
   while (iJ < 6 && iA < 6) {
     // Poção: ativa quando o último Pokémon do jogador entra na luta
     if (iJ === 5 && pocaoDisp && !pocaoAtivada) {
-      forcasJ[5] += 20;
-      forcasJBase[5] += 20;
+      const cura = Math.round(forcasJ[5] * 0.20);
+      forcasJ[5] += cura;
+      forcasJBase[5] += cura;
       pocaoAtivada = true;
-      log.push({ tipo: 'pocao', pk: timeJ[5] });
+      log.push({ tipo: 'pocao', pk: timeJ[5], cura });
     }
 
     const pkJ = timeJ[iJ];
@@ -1136,7 +1137,7 @@ function animarBatalha(logEntries, vitoria, gin) {
     for (const e of logEntries) {
       // Entrada especial: poção usada
       if (e.tipo === 'pocao') {
-        adicionarLog(logEl, `💊 ${nomePT(e.pk.nome)} usou Poção! +20 de força!`, 'pocao');
+        adicionarLog(logEl, `🧪 ${nomePT(e.pk.nome)} usou Poção! Força +20% (+${e.cura})!`, 'pocao');
         await esperar(900);
         continue;
       }
