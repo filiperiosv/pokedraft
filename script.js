@@ -392,7 +392,7 @@ const REDRAFT_GINASIO_MINIMO = 6; // desbloqueado após a 6ª batalha
 const DIF_POR_POSICAO = [
   1.10, 1.15, 1.18, 1.20, 1.20, 1.22, 1.20, 1.25, // 8 ginásios
   1.22, 1.28, 1.35,                                  // 3 Elite Four
-  1.28,                                               // Campeão Lance
+  1.23,                                               // Campeão Lance (~20% mais forte)
 ];
 
 function embaralhar(arr) {
