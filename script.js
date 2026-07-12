@@ -1314,6 +1314,12 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
         : `<div class="insignia-fim vazia" title="${g.insignia.nome} Badge"></div>`;
     }).join('');
 
+  const squadHtml = estado.squad.map(pk => `
+    <div class="squad-fim-slot${pk.isShiny ? ' shiny' : ''}${pk === mvpPk ? ' mvp' : ''}">
+      <img src="${spriteUrl(pk, pk.isShiny)}" alt="${pk.nome}" />
+      <span>${nomePT(pk.nome)}</span>
+    </div>`).join('');
+
   const svgPokebola = SVG_POKEBOLA;
   const svgTrofeu   = SVG_TROFEU;
 
@@ -1321,6 +1327,7 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
     <div class="resultado-icone">${vitoria ? svgTrofeu : svgPokebola}</div>
     <p class="titulo-fase">${vitoria ? 'CAMPEÃO!' : 'DERROTA...'}</p>
     <p class="subtitulo">${subtituloDerrota}</p>
+    <div class="squad-fim">${squadHtml}</div>
     <div class="insignias-fim-container">
       <div class="insignias-fim-label">${totalInsignias}/8 insígnias</div>
       <div class="insignias-fim-row">${insigniasFimHtml}</div>
