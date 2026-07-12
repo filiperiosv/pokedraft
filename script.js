@@ -1045,7 +1045,7 @@ function simularBatalha(timeJ, timeA, pocaoDisp = false) {
     const fA    = forcasA[iA] * multA * rngA;
 
     if (fJ >= fA) {
-      forcasJ[iJ] = Math.max(0, forcasJ[iJ] - forcasAFadiga[iA]);
+      forcasJ[iJ] = Math.max(0, forcasJ[iJ] - Math.min(forcasA[iA], forcasAFadiga[iA]));
       forcasA[iA] = 0;
       log.push({ vitoria: 'jogador',    venc: pkJ, derrota: pkA, iJ, iA, multJ, multA,
                  hpJSnap: [...forcasJ], hpASnap: [...forcasA], hpJBase: forcasJBase, hpABase: forcasABase });
