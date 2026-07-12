@@ -1353,7 +1353,7 @@ function gerarTexto(vitoria, chegouAte, mvpNome) {
 Cheguei até: ${chegouAte}
 MVP: ${mvpNome}
 Time: ${squad}
-Jogue em: pokedraft.game`;
+Jogue em: pokedraft-game.vercel.app`;
 }
 
 // ===== COMPARTILHAR COMO IMAGEM =====
@@ -1513,7 +1513,7 @@ async function _desenharCard(ctx, W, vitoria, ginDerrota, mvpNome, somenteCalcul
   linha(y);
   y += 16;
 
-  texto('pokedraft.game', W / 2, y, cinzaT, 7);
+  texto('pokedraft-game.vercel.app', W / 2, y, cinzaT, 7);
   y += 24;
 
   // Borda (só no modo real, agora que temos a altura final)
