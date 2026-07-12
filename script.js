@@ -1304,23 +1304,13 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
       <div class="insignias-fim-label">${totalInsignias}/8 insígnias</div>
       <div class="insignias-fim-row">${insigniasFimHtml}</div>
     </div>
-    <div class="texto-compartilhar">${txtCompartilhar}</div>
     <div class="btns-fim">
       <button class="btn-imagem" id="btnImagem">📸 COMPARTILHAR IMAGEM</button>
-      <button class="btn-copiar" id="btnCopiar">📋 COPIAR TEXTO</button>
       <button class="btn-reiniciar" id="btnReiniciar">↺ JOGAR NOVAMENTE</button>
     </div>
   `;
 
   mostrar(telaFim);
-
-  document.getElementById('btnCopiar').addEventListener('click', () => {
-    navigator.clipboard.writeText(txtCompartilhar).then(() => {
-      document.getElementById('btnCopiar').textContent = '✅ COPIADO!';
-    }).catch(() => {
-      prompt('Copie o texto abaixo:', txtCompartilhar);
-    });
-  });
 
   document.getElementById('btnReiniciar').addEventListener('click', () => location.reload());
 

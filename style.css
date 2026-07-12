@@ -1213,20 +1213,6 @@ body {
   object-fit: contain;
 }
 
-.texto-compartilhar {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  background: var(--bege-esc);
-  border: 2px solid var(--preto);
-  border-radius: 3px;
-  padding: 10px;
-  margin: 12px 0;
-  line-height: 1.8;
-  color: var(--preto);
-  text-align: left;
-  white-space: pre-line;
-  word-break: break-word;
-}
 
 .btn-imagem {
   font-family: 'Press Start 2P', monospace;
@@ -1249,22 +1235,6 @@ body {
   cursor: default;
 }
 
-.btn-copiar {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  background: var(--verde-hp);
-  color: var(--branco);
-  border: 2px solid var(--preto);
-  box-shadow: 3px 3px 0 var(--preto);
-  padding: 9px 16px;
-  cursor: pointer;
-  border-radius: 3px;
-  margin-top: 4px;
-}
-.btn-copiar:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--preto);
-}
 
 .btn-reiniciar {
   font-family: 'Press Start 2P', monospace;
