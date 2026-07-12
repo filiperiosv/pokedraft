@@ -45,7 +45,7 @@ const POOL_GINASIOS = [
     trainerSprite: `${_PS}whitney.png`,      insignia: { nome: 'Plain',   arquivo: 'plain.png'   } },
   { nome: 'Morty',     titulo: 'Líder — Ecruteak City',   especialidade: 'Fantasma 👻', aceId: 94,  time: [92,93,92,93,200,94],
     trainerSprite: `${_PS}morty.png`,        insignia: { nome: 'Fog',     arquivo: 'fog.png'     } },
-  { nome: 'Chuck',     titulo: 'Líder — Cianwood City',   especialidade: 'Luta 🥊',     aceId: 68,  time: [56,57,66,67,62,68],
+  { nome: 'Chuck',     titulo: 'Líder — Cianwood City',   especialidade: 'Luta 🥊',     aceId: 62,  time: [56,57,66,67,237,62],
     trainerSprite: `${_PS}chuck.png`,        insignia: { nome: 'Storm',   arquivo: 'storm.png'   } },
   { nome: 'Jasmine',   titulo: 'Líder — Olivine City',    especialidade: 'Aço ⚙️',      aceId: 208, time: [81,82,82,205,227,208],
     trainerSprite: `${_PS}jasmine.png`,      insignia: { nome: 'Mineral', arquivo: 'mineral.png' } },
@@ -390,9 +390,9 @@ const REDRAFT_GINASIO_MINIMO = 6; // desbloqueado após a 6ª batalha
 
 // Dificuldade cresce por posição — independente de quem foi sorteado
 const DIF_POR_POSICAO = [
-  1.08, 1.12, 1.15, 1.17, 1.22, 1.24, 1.22, 1.26, // 8 ginásios
-  1.30, 1.34, 1.36,                                  // 3 Elite Four
-  1.15,                                               // Campeão Lance
+  1.08, 1.12, 1.13, 1.15, 1.18, 1.20, 1.24, 1.26, // 8 ginásios
+  1.24, 1.28, 1.30,                                  // 3 Elite Four
+  1.25,                                               // Campeão Lance
 ];
 
 function embaralhar(arr) {
