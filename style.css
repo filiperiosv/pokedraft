@@ -1279,10 +1279,10 @@ body {
 }
 
 .insignias-fim-row {
-  display: flex;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(4, 36px);
+  gap: 8px;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .insignia-fim {
