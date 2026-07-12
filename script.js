@@ -1313,6 +1313,7 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
       <div class="insignias-fim-label">${totalInsignias}/8 insígnias</div>
       <div class="insignias-fim-row">${insigniasFimHtml}</div>
     </div>
+    <div class="mvp-destaque">⭐ MVP: ${nomePT(mvpPk?.nome ?? '???')}${mvpPk?.isShiny ? ' ✦' : ''}</div>
     <div class="btns-fim">
       <button class="btn-imagem" id="btnImagem">📸 COMPARTILHAR IMAGEM</button>
       <button class="btn-reiniciar" id="btnReiniciar">↺ JOGAR NOVAMENTE</button>
