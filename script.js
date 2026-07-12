@@ -929,8 +929,9 @@ function ativarModoSacrificio() {
   renderListaDrag();
   const btn = document.getElementById('btnRedraft');
   btn.textContent = '✕ CANCELAR';
+  btn.classList.add('modo-sacrificio-ativo');
   btn.onclick = cancelarSacrificio;
-  document.getElementById('instrucaoPreJogo').textContent = 'Escolha qual Pokémon substituir:';
+  document.getElementById('instrucaoPreJogo').textContent = 'Toque em qual Pokémon quer substituir:';
 }
 
 function cancelarSacrificio() {
@@ -938,6 +939,7 @@ function cancelarSacrificio() {
   renderListaDrag();
   const btn = document.getElementById('btnRedraft');
   btn.textContent = '↺ RE-DRAFT';
+  btn.classList.remove('modo-sacrificio-ativo');
   btn.onclick = ativarModoSacrificio;
   document.getElementById('instrucaoPreJogo').textContent = 'Arraste para definir a ordem de entrada';
 }
@@ -1292,6 +1294,16 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
   const chegouAte = ginDerrota ? ginDerrota.nome : 'Campeão Lance';
   const txtCompartilhar = gerarTexto(vitoria, chegouAte, mvpNome);
 
+  const posDerrota = estado.ginasioAtual; // índice 0-based da batalha perdida
+  function labelPosicao(idx) {
+    if (idx <= 7) return `${idx + 1}º Ginásio`;
+    if (idx <= 10) return `${idx - 7}º Líder da Elite Four`;
+    return 'Campeão';
+  }
+  const subtituloDerrota = ginDerrota
+    ? `Eliminado por ${ginDerrota.nome} (${labelPosicao(posDerrota)})`
+    : 'Você conquistou a Liga Pokémon!';
+
   const totalInsignias = estado.insignias.length;
   const insigniasFimHtml = estado.liga.slice(0, 8)
     .filter(g => g.insignia)
@@ -1308,7 +1320,7 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
   caixa.innerHTML = `
     <div class="resultado-icone">${vitoria ? svgTrofeu : svgPokebola}</div>
     <p class="titulo-fase">${vitoria ? 'CAMPEÃO!' : 'DERROTA...'}</p>
-    <p class="subtitulo">${vitoria ? 'Você conquistou a Liga Pokémon!' : `Eliminado por ${ginDerrota?.nome}.`}</p>
+    <p class="subtitulo">${subtituloDerrota}</p>
     <div class="insignias-fim-container">
       <div class="insignias-fim-label">${totalInsignias}/8 insígnias</div>
       <div class="insignias-fim-row">${insigniasFimHtml}</div>

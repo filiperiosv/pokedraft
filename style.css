@@ -132,6 +132,14 @@ body {
   display: none !important;
 }
 
+@keyframes fadeTela {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tela:not(.oculto) {
+  animation: fadeTela 0.18s ease both;
+}
+
 /* ===== Caixa de Diálogo (estilo Pokémon) ===== */
 .caixa-dialogo {
   background: var(--bege);
@@ -603,6 +611,13 @@ body {
   box-shadow: 1px 1px 0 var(--preto);
 }
 
+.btn-secundario.modo-sacrificio-ativo {
+  background: #c0392b;
+  color: var(--branco);
+  border-color: var(--preto);
+  box-shadow: 3px 3px 0 var(--preto);
+}
+
 .btn-pocao {
   font-family: 'Press Start 2P', monospace;
   font-size: 9px;
@@ -767,6 +782,7 @@ body {
   cursor: grab;
   user-select: none;
   transition: opacity 0.15s, transform 0.1s;
+  position: relative;
 }
 
 .drag-item:active { cursor: grabbing; }
@@ -782,14 +798,19 @@ body {
 }
 
 /* Indicadores visuais de posição de inserção */
-.drag-item.insert-antes {
-  border-top: 3px solid var(--vermelho);
-  margin-top: -1px;
+.drag-item.insert-antes::before,
+.drag-item.insert-depois::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--vermelho);
+  border-radius: 2px;
+  box-shadow: 0 0 4px var(--vermelho);
 }
-.drag-item.insert-depois {
-  border-bottom: 3px solid var(--vermelho);
-  margin-bottom: -1px;
-}
+.drag-item.insert-antes::before { top: -4px; }
+.drag-item.insert-depois::after  { bottom: -4px; }
 
 .drag-item.shiny {
   border-color: var(--dourado);
@@ -1223,8 +1244,8 @@ body {
 }
 
 .insignia-fim {
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 2px solid #555;
   background: rgba(0,0,0,0.12);
@@ -1245,8 +1266,8 @@ body {
 }
 
 .insignia-fim img {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   display: block;
   object-fit: contain;
 }
