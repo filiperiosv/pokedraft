@@ -781,6 +781,10 @@ body {
   font-family: 'Press Start 2P', monospace;
 }
 
+.drag-pocao-tag {
+  font-size: 12px;
+}
+
 .drag-pos {
   font-family: 'Press Start 2P', monospace;
   font-size: 8px;

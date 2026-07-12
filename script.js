@@ -779,7 +779,7 @@ function renderListaDrag() {
       <span class="drag-pos">${i + 1}</span>
       <img class="drag-sprite${pk.isShiny ? ' sprite-shiny' : ''}" src="${spriteUrl(pk, pk.isShiny)}" alt="${pk.nome}" />
       <div class="drag-info">
-        <div class="drag-nome">${nomePT(pk.nome)}${pk.isShiny ? ' <span class="drag-shiny-tag">✦ SHINY</span>' : ''}</div>
+        <div class="drag-nome">${nomePT(pk.nome)}${pk.isShiny ? ' <span class="drag-shiny-tag">✦ SHINY</span>' : ''}${i === 5 && estado.pocaoDisponivel ? ' <span class="drag-pocao-tag">🧪</span>' : ''}</div>
         <div class="drag-stats">${pk.tipos.map(tipoPT).join(' · ')}</div>
       </div>
       ${acaoDireita}
