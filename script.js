@@ -10,6 +10,7 @@ const estado = {
   insignias: [],
   liga: [],
   pocaoDisponivel: false,
+  pocaoSelecionada: false,
 };
 
 const SQUAD_MAX = 6;
@@ -727,7 +728,22 @@ function renderPreJogo() {
     hintRedraft.classList.add('oculto');
   }
 
-  // Indicador de poção
+  // Botão de poção
+  estado.pocaoSelecionada = false;
+  const btnPocao = document.getElementById('btnPocao');
+  if (estado.pocaoDisponivel) {
+    btnPocao.classList.remove('oculto');
+    btnPocao.classList.remove('ativo');
+    btnPocao.onclick = () => {
+      estado.pocaoSelecionada = !estado.pocaoSelecionada;
+      btnPocao.classList.toggle('ativo', estado.pocaoSelecionada);
+      renderListaDrag();
+    };
+  } else {
+    btnPocao.classList.add('oculto');
+  }
+
+  // Hint de countdown da poção
   let hintPocao = document.getElementById('hintPocao');
   if (!hintPocao) {
     hintPocao = document.createElement('p');
@@ -735,17 +751,10 @@ function renderPreJogo() {
     hintPocao.className = 'hint-redraft hint-pocao';
     document.querySelector('.acoes-pre').insertAdjacentElement('afterbegin', hintPocao);
   }
-  if (estado.redraftUsado) {
-    if (estado.pocaoDisponivel) {
-      hintPocao.textContent = '🧪 Poção disponível para o último Pokémon!';
-      hintPocao.classList.remove('oculto');
-    } else if (estado.ginasioAtual < 9) {
-      const faltam = 9 - estado.ginasioAtual;
-      hintPocao.textContent = `🧪 Poção disponível em ${faltam} batalha${faltam > 1 ? 's' : ''}`;
-      hintPocao.classList.remove('oculto');
-    } else {
-      hintPocao.classList.add('oculto');
-    }
+  if (estado.redraftUsado && !estado.pocaoDisponivel && estado.ginasioAtual < 9) {
+    const faltam = 9 - estado.ginasioAtual;
+    hintPocao.textContent = `🧪 Poção disponível em ${faltam} batalha${faltam > 1 ? 's' : ''}`;
+    hintPocao.classList.remove('oculto');
   } else {
     hintPocao.classList.add('oculto');
   }
@@ -779,7 +788,7 @@ function renderListaDrag() {
       <span class="drag-pos">${i + 1}</span>
       <img class="drag-sprite${pk.isShiny ? ' sprite-shiny' : ''}" src="${spriteUrl(pk, pk.isShiny)}" alt="${pk.nome}" />
       <div class="drag-info">
-        <div class="drag-nome">${nomePT(pk.nome)}${pk.isShiny ? ' <span class="drag-shiny-tag">✦ SHINY</span>' : ''}${i === 5 && estado.pocaoDisponivel ? ' <span class="drag-pocao-tag">🧪</span>' : ''}</div>
+        <div class="drag-nome">${nomePT(pk.nome)}${pk.isShiny ? ' <span class="drag-shiny-tag">✦ SHINY</span>' : ''}${i === 5 && estado.pocaoSelecionada ? ' <span class="drag-pocao-tag">🧪</span>' : ''}</div>
         <div class="drag-stats">${pk.tipos.map(tipoPT).join(' · ')}</div>
       </div>
       ${acaoDireita}
@@ -1094,7 +1103,7 @@ function atualizarBarrasHP(hpJSnap, hpASnap, hpJBase, hpABase) {
 function renderTelaBatalha(gin, timeJ, timeA) {
   const copiaJ = timeJ.map(pk => ({ ...pk }));
   const copiaA = timeA.map(pk => ({ ...pk }));
-  const resultado = simularBatalha(copiaJ, copiaA, estado.pocaoDisponivel);
+  const resultado = simularBatalha(copiaJ, copiaA, estado.pocaoSelecionada);
   if (resultado.pocaoAtivada) estado.pocaoDisponivel = false;
 
   const spritesOp = document.getElementById('spritesOponente');
