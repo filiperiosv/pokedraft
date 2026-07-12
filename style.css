@@ -1222,24 +1222,23 @@ body {
 }
 
 .squad-fim {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin: 8px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 10px 0;
+  width: 100%;
 }
 
 .squad-fim-slot {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  width: 52px;
+  gap: 3px;
 }
 
 .squad-fim-slot img {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   image-rendering: pixelated;
   background: rgba(0,0,0,0.06);
   border-radius: 4px;

@@ -1288,7 +1288,7 @@ function encerrarCampanha(vitoria, ginDerrota = null) {
   for (const [id, vit] of Object.entries(estado.vitoriasPorPk)) {
     if (vit > maxVit) { maxVit = vit; mvpId = parseInt(id); }
   }
-  const mvpPk = mvpId ? estado.squad.find(p => p.id === mvpId) : estado.squad[0];
+  const mvpPk = (mvpId ? estado.squad.find(p => p.id === mvpId) : null) ?? estado.squad[0];
   const mvpNome = mvpPk ? nomePT(mvpPk.nome) : '???';
 
   const chegouAte = ginDerrota ? ginDerrota.nome : 'Campeão Lance';
