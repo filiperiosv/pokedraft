@@ -433,7 +433,7 @@ function idAleatorio() {
 // Re-draft tem odds maiores para Pokémon fortes (jogador já está no late game)
 function idAleatorioPesado() {
   const r = Math.random();
-  const tier = r < 0.05 ? TIER_FRACO : r < 0.25 ? TIER_MEDIO : TIER_FORTE;
+  const tier = r < 0.20 ? TIER_MEDIO : TIER_FORTE;
   return tier[Math.floor(Math.random() * tier.length)];
 }
 
