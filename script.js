@@ -781,7 +781,7 @@ function renderListaDrag() {
     li.dataset.idx = i;
 
     const acaoDireita = sacrificio
-      ? `<button class="btn-sacrificio" data-idx="${i}">✂ TROCAR</button>`
+      ? `<button class="btn-sacrificio" data-idx="${i}">TROCAR</button>`
       : `<span class="drag-handle">⠿</span>`;
 
     li.innerHTML = `
