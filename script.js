@@ -751,8 +751,8 @@ function renderPreJogo() {
     hintPocao.className = 'hint-redraft hint-pocao';
     document.querySelector('.acoes-pre').insertAdjacentElement('afterbegin', hintPocao);
   }
-  if (estado.redraftUsado && !estado.pocaoDisponivel && estado.ginasioAtual < 9) {
-    const faltam = 9 - estado.ginasioAtual;
+  if (estado.redraftUsado && !estado.pocaoDisponivel && estado.ginasioAtual < 10) {
+    const faltam = 10 - estado.ginasioAtual;
     hintPocao.textContent = `🧪 Poção disponível em ${faltam} batalha${faltam > 1 ? 's' : ''}`;
     hintPocao.classList.remove('oculto');
   } else {
@@ -1007,11 +1007,6 @@ async function iniciarBatalha() {
   mostrar(telaLoading);
   textoLoading.textContent = 'Preparando batalha...';
   const gin = estado.liga[estado.ginasioAtual];
-
-  // Poção concedida ao chegar na batalha 10 (índice 9)
-  if (estado.ginasioAtual === 9 && !estado.pocaoDisponivel) {
-    estado.pocaoDisponivel = true;
-  }
 
   try {
     const timeAdv = await Promise.all(gin.time.map(buscarPokemon));
@@ -1268,6 +1263,10 @@ async function aposVitoria() {
     renderInsignias();
   }
   restaurarTime();
+  // Poção concedida ao vencer a 10ª batalha (índice 9), disponível a partir da 11ª
+  if (estado.ginasioAtual === 9 && !estado.pocaoDisponivel) {
+    estado.pocaoDisponivel = true;
+  }
   estado.ginasioAtual++;
   if (estado.ginasioAtual >= estado.liga.length) {
     encerrarCampanha(true);
